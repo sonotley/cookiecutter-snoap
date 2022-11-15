@@ -1,9 +1,9 @@
 [tool.poetry]
-name = {{ cookiecutter.package_slug }}
+name = "{{ cookiecutter.package_slug }}"
 version = "0.1.0"
-description = {{ cookiecutter.description }}
-authors = [{{ cookiecutter.author }}]
-license = {{ cookiecutter.license }}
+description = "{{ cookiecutter.description }}"
+authors = ["{{ cookiecutter.author }}"]
+license = "{{ cookiecutter.license }}"
 packages = [
     { include = "example_project" },
 
