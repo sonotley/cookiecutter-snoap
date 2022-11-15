@@ -36,7 +36,7 @@ jobs:
     - name: Add poetry
       uses: abatilo/actions-poetry@v2.1.6
     - name: Build dummy package  
-      run: poetry export -f requirements.txt --output dist/requirements.txt && poetry build
+      run: cd my-lovely-project && poetry export -f requirements.txt --output dist/requirements.txt && poetry build
     - name: Test with pytest
       run: |
         pytest
