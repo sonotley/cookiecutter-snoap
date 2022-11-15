@@ -1,5 +1,9 @@
 {
   "project_name": "My lovely project",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
-  "package_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}"
+  "package_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "description": "",
+  "author": "",
+  "license": "",
+  "python-min-version": "3.8"
 }
