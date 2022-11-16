@@ -9,10 +9,11 @@ echo "Building Python virtual environment"
 python3 -m venv "$filePath"/env
 target=("$(dirname "$0")"/{{ cookiecutter.package_slug }}*.whl)
 source "$filePath"/env/bin/activate
-pip install -Ur "${target[0]}"/requirements.txt || { echo Installation with pinned dependencies failed, attempting local dependency resolution; pinFail=1;}
+pip install -Ur "$(dirname "$0")"/requirements.txt || { echo Installation with pinned dependencies failed, attempting local dependency resolution; pinFail=1;}
 pip install "${target[0]}"
 ln -s "$filePath"/env/bin/{{ cookiecutter.project_slug }} "$filePath"/{{ cookiecutter.project_slug }}
-cp "$(dirname "$0")"/config.yaml "$filePath"/config.yaml
+{% if cookiecutter.config_file_type != "none" %}cp "$(dirname "$0")"/config.{{ cookiecutter.config_file_type }} "$filePath"/config.{{ cookiecutter.config_file_type }}{% endif %}
+cp -r "$(dirname "$0")"/resources "$filePath"/resources
 echo "*******************************"
 echo "Installation complete"
 if [ $pinFail == 1 ]
