@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "{{ cookiecutter.description }}"
 authors = ["{{ cookiecutter.author }}"]
 license = "{{ cookiecutter.license }}"
-packages = [{ include = "example_project" }]
+packages = [{ include = "{{ cookiecutter.package_slug }}" }]
 
 [tool.poetry.dependencies]
 python = "^{{ cookiecutter.python_min_version }}"
