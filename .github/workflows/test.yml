@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  make-cookiecutter:
+  make-cookiecutter-and-test-installer:
 
     runs-on: ubuntu-latest
 
@@ -30,8 +30,6 @@ jobs:
     - name: Run cookiecutter
       run: cookiecutter . --no-input
 
-  test-install-scripts:
-    steps:
     - name: Add poetry
       uses: abatilo/actions-poetry@v2.1.6
     - name: Build dummy package  
