@@ -38,5 +38,7 @@ jobs:
       run: cd my-lovely-project/dist && /bin/bash install_on_linux.sh
     - name: Create requirements.txt
       run: cd my-lovely-project && poetry export -f requirements.txt --output dist/requirements.txt
+    - name: Delete previous installation
+      run: rm -r /opt/my-lovely-project
     - name: Run install script with requirements.txt
       run: cd my-lovely-project/dist && /bin/bash install_on_linux.sh
