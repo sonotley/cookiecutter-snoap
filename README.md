@@ -1,4 +1,4 @@
-https://github.com/sonotley/cookiecutter-snoap/actions/workflows/test.yaml/badge.svg
+![example workflow](https://github.com/sonotley/cookiecutter-snoap/actions/workflows/test.yaml/badge.svg)
 
 # What is cookiecutter-snoap?
 
