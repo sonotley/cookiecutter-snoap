@@ -31,6 +31,7 @@ jobs:
       run: cookiecutter . --no-input
 
   test-install-scripts:
+    steps:
     - name: Add poetry
       uses: abatilo/actions-poetry@v2.1.6
     - name: Build dummy package  
