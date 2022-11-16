@@ -40,7 +40,7 @@ jobs:
     - name: Build dummy package  
       run: cd my-lovely-project && poetry export -f requirements.txt --output dist/requirements.txt && poetry build
     - name: Run install script
-      run: cd my-lovely-project/dist && sh install_on_linux.sh
+      run: cd my-lovely-project/dist && /bin/bash install_on_linux.sh
 #    - name: Test with pytest
 #      run: |
 #        pytest
