@@ -43,4 +43,4 @@ jobs:
     - name: Run install script with requirements.txt
       run: cd ~/my-lovely-project/dist && /bin/bash install_on_linux.sh
     - name: Run executable
-      run: cd /opt/my-lovely-project ./my-lovely-project
+      run: cd /opt/my-lovely-project && ./my-lovely-project
