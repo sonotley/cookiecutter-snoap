@@ -2,6 +2,8 @@
 
 # What is cookiecutter-snoap?
 
-It's a cookiecutter template for my 'snakes on a plane' Python application deployment workflow.
+It's a cookiecutter template for [my Snakes on a Plane workflow](https://sonotley.github.io/python-deployment-docs/).
+
+If you are looking for the source for the website itself, that is in a different repo [here](https://github.com/sonotley/python-deployment-docs)
 
 

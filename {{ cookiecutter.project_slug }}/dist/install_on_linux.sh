@@ -14,6 +14,7 @@ pip install "${target[0]}"
 ln -s "$filePath"/env/bin/{{ cookiecutter.project_slug }} "$filePath"/{{ cookiecutter.project_slug }}
 {% if cookiecutter.config_file_type != "none" %}cp "$(dirname "$0")"/config.{{ cookiecutter.config_file_type }} "$filePath"/config.{{ cookiecutter.config_file_type }}{% endif %}
 cp -r "$(dirname "$0")"/resources "$filePath"/resources
+cp -r "$(dirname "$0")"/readme.md "$filePath"/readme.md
 echo "*******************************"
 echo "Installation complete"
 if [ $pinFail == 1 ]

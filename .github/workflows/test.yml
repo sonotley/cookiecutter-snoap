@@ -28,17 +28,19 @@ jobs:
         python -m pip install --upgrade pip
         pip install cookiecutter
     - name: Run cookiecutter
-      run: cookiecutter . --no-input
+      run: cookiecutter . --no-input -o ~
 
     - name: Add poetry
       uses: abatilo/actions-poetry@v2.1.6
     - name: Build dummy package  
-      run: cd my-lovely-project && poetry build
+      run: cd ~/my-lovely-project && poetry build
     - name: Run install script without requirements.txt
-      run: cd my-lovely-project/dist && /bin/bash install_on_linux.sh
+      run: cd ~/my-lovely-project/dist && /bin/bash install_on_linux.sh
     - name: Create requirements.txt
-      run: cd my-lovely-project && poetry export -f requirements.txt --output dist/requirements.txt
+      run: cd ~/my-lovely-project && poetry export -f requirements.txt --output dist/requirements.txt
     - name: Delete previous installation
       run: rm -r /opt/my-lovely-project
     - name: Run install script with requirements.txt
-      run: cd my-lovely-project/dist && /bin/bash install_on_linux.sh
+      run: cd ~/my-lovely-project/dist && /bin/bash install_on_linux.sh
+    - name: Run executable
+      run: cd /opt/my-lovely-project ./my-lovely-project
