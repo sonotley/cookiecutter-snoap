@@ -1,12 +1,20 @@
 import subprocess
 import os
-import sys
+import pytest
+from pathlib import Path
+import tempfile
 
 
-def test_cookiecutter():
-    """Test that no errors are thrown running the cookiecutter itself, also forms the setup for following tests"""
-    subprocess.run(["cookiecutter", ".", "--no-input", "-f"], check=True)
-    assert os.path.exists('my-lovely-project')
+@pytest.fixture
+def temp_dir():
+    with tempfile.TemporaryDirectory("cc-snoap-test") as tf:
+        yield Path(tf)
+
+
+def test_cookiecutter_no_hooks(temp_dir):
+    """Test that no errors are thrown running the cookiecutter itself with no hooks"""
+    subprocess.run(["cookiecutter", ".", "--no-input", "-f", "-o", str(temp_dir), "--accept-hooks", "no"], check=True)
+    assert os.path.exists(temp_dir / 'my-lovely-project')
 
 
 # def test_install():

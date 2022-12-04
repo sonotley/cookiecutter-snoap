@@ -13,7 +13,7 @@ It's a [cookiecutter](https://cookiecutter.readthedocs.io/) template for [my Sna
 First, install `cookiecutter` and `poetry`. If you use pipx, that's as simple as:
 
     pipx install cookiecutter
-    pips install poetry
+    pipx install poetry
 
 Then point cookiecutter at this repo to create a project template:
 
