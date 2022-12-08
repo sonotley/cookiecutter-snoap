@@ -10,8 +10,8 @@ echo Building Python virtual environment
 py -3 -m venv %filePath%\env
 FOR /F "delims=" %%i IN ('dir /b %~dp0{{ cookiecutter.package_slug }}*.whl') DO set target=%~dp0%%i
 FOR /F "delims=" %%i IN ('dir /b %~dp0requirements.txt') DO set requirements=%~dp0%%i
+%filePath%\env\Scripts\python.exe -m pip install --upgrade pip
 call %filePath%\env\Scripts\activate
-pip install --upgrade pip
 pip install -r %requirements% || set pinFail=1
 pip install %target%
 mklink /H %filePath%\{{ cookiecutter.project_slug }}.exe %filePath%\env\Scripts\{{ cookiecutter.project_slug }}.exe
