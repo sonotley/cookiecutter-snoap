@@ -18,8 +18,8 @@ mklink /H %filePath%\{{ cookiecutter.project_slug }}.exe %filePath%\env\Scripts\
 xcopy %~dp0config.{{ cookiecutter.config_file_type }} %filePath%\ /F/Q
 xcopy %~dp0resources %filePath%\ /F/Q/S/E
 xcopy %~dp0data %filePath%\ /F/Q/S/E
-FOR /F "delims=" %%i IN (%filePath%\env\lib\python*\site-packages\{{ cookiecutter.package_slug }}\_options.py) DO set options=%%i
-echo install_method, install_target = "one_dir","%filePath%" > %options%
+rem FOR /F "delims=" %%i IN (%filePath%\env\Lib\site-packages\{{ cookiecutter.package_slug }}\_options.py) DO set options=%%i
+echo install_method, install_target = "one_dir","%filePath%" > %filePath%\env\Lib\site-packages\{{ cookiecutter.package_slug }}\_options.py
 echo *************************
 echo Installation complete
 if %pinFail%==1 echo WARNING: pinned versions of dependencies could not be installed. Instead dependency resolution was performed by pip, it will probably work but is not exactly as tested.
