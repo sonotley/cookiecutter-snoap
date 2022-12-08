@@ -18,8 +18,7 @@ mklink /H %filePath%\{{ cookiecutter.project_slug }}.exe %filePath%\env\Scripts\
 xcopy %~dp0config.{{ cookiecutter.config_file_type }} %filePath%\ /F/Q
 xcopy %~dp0resources %filePath%\ /F/Q/S/E
 xcopy %~dp0data %filePath%\ /F/Q/S/E
-rem line below needs testing on windows, not sure about string and wildcard etc
-FOR /F "delims=" %%i IN (%filePath%/env/lib/python*/site-packages/{{ cookiecutter.package_slug }}/_options.py) DO set options=%%i
+FOR /F "delims=" %%i IN (%filePath%\env\lib\python*\site-packages\{{ cookiecutter.package_slug }}\_options.py) DO set options=%%i
 echo install_method, install_target = "one_dir","%filePath%" > %options%
 echo *************************
 echo Installation complete

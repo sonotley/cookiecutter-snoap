@@ -1,8 +1,6 @@
 # cookiecutter-snoap
 
 ![example workflow](https://github.com/sonotley/cookiecutter-snoap/workflows/make-cookiecutter-and-test-installer/badge.svg)
-![example workflow](https://github.com/sonotley/cookiecutter-snoap/workflows/make-cookiecutter-and-test-installer-win/badge.svg)
-
 
 ## What is cookiecutter-snoap?
 
