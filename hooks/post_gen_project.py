@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 
 # Remove config files other than the one selected (if any)
 CONFIG_FILE_TYPES = {"yaml", "toml", "ini"}
@@ -19,12 +20,21 @@ for path in REMOVE_PATHS:
         else:
             os.unlink(path)
 
-# Create an empty directory for resources to be copied to the deployment target
+# Create an empty directory for resources and data to be copied to the deployment target
 RESOURCES_DIR = "dist/resources"
+DATA_DIR = "dist/data"
 
 if not os.path.exists(RESOURCES_DIR):
     os.mkdir(RESOURCES_DIR)
 
+if not os.path.exists(DATA_DIR):
+    os.mkdir(DATA_DIR)
+
+if sys.platform in ("linux", "darwin"):
+    subprocess.run(["chmod", "+x", "dist/install_on_linux.sh"])
+    subprocess.run(["chmod", "+x", "build/build.sh"])
+
+# !!!Anything after this will only run if initialise_poetry=True!!!
 if not {{ cookiecutter.initialise_poetry }}:
     exit(0)
 
