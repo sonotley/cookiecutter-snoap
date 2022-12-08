@@ -66,17 +66,19 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install cookiecutter
+    - name: Make source dir
+      run: mkdir \source
     - name: Run cookiecutter
-      run: cookiecutter . --no-input -o C:\source
+      run: cookiecutter . --no-input -o \source
     - name: Build dummy package
-      run: cd C:\source\my-lovely-project && poetry build
+      run: cd \source\my-lovely-project && poetry build
     - name: Run install script without requirements.txt
-      run: cd C:\source\my-lovely-project\dist && install_on_windows.bat
+      run: cd \source\my-lovely-project\dist && install_on_windows.bat D:\
     - name: Create requirements.txt
-      run: cd C:\source\my-lovely-project && poetry export -f requirements.txt --output dist\requirements.txt
+      run: cd \source\my-lovely-project && poetry export -f requirements.txt --output dist\requirements.txt
     - name: Delete previous installation
-      run: rm -r C:\my-lovely-project
+      run: rm -r \my-lovely-project
     - name: Run install script with requirements.txt
-      run: cd C:\source\my-lovely-project`dist && install_on_windows.bat
+      run: cd \source\my-lovely-project`dist && install_on_windows.bat D:\
     - name: Run executable
-      run: cd  C:\my-lovely-project && my-lovely-project.exe
+      run: cd \my-lovely-project && my-lovely-project.exe
