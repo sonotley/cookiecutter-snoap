@@ -12,6 +12,7 @@ FOR /F "delims=" %%i IN ('dir /b %~dp0{{ cookiecutter.package_slug }}*.whl') DO 
 FOR /F "delims=" %%i IN ('dir /b %~dp0requirements.txt') DO set requirements=%~dp0%%i
 %filePath%\env\Scripts\python.exe -m pip install --upgrade pip
 call %filePath%\env\Scripts\activate
+set pinFail=0
 pip install -r %requirements% || set pinFail=1
 pip install %target%
 mklink /H %filePath%\{{ cookiecutter.project_slug }}.exe %filePath%\env\Scripts\{{ cookiecutter.project_slug }}.exe
