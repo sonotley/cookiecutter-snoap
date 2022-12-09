@@ -16,7 +16,7 @@ ln -s "$filePath"/env/bin/{{ cookiecutter.project_slug }} "$filePath"/{{ cookiec
 {% if cookiecutter.config_file_type != "none" %}cp "$(dirname "$0")"/config.{{ cookiecutter.config_file_type }} "$filePath"/config.{{ cookiecutter.config_file_type }}{% endif %}
 cp -r "$(dirname "$0")"/data "$filePath"/data
 cp -r "$(dirname "$0")"/resources "$filePath"/resources
-cp -r "$(dirname "$0")"/readme.md "$filePath"/readme.md
+cp -r "$(dirname "$0")"/readme_for_app.md "$filePath"/readme.md
 echo 'install_method, install_target = "one_dir","'"$filePath"'"' > "$filePath"/env/lib/python*/site-packages/{{ cookiecutter.package_slug }}/_options.py
 echo "*******************************"
 echo Installation complete

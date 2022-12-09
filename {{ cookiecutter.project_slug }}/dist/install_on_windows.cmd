@@ -17,6 +17,7 @@ pip install -r %requirements% || set pinFail=1
 pip install %target%
 mklink /H %filePath%\{{ cookiecutter.project_slug }}.exe %filePath%\env\Scripts\{{ cookiecutter.project_slug }}.exe
 xcopy %~dp0config.{{ cookiecutter.config_file_type }} %filePath%\ /F/Q
+xcopy %~dp0readme_for_app.md %filePath%\readme.md /F/Q
 xcopy %~dp0resources %filePath%\ /F/Q/S/E
 xcopy %~dp0data %filePath%\ /F/Q/S/E
 rem FOR /F "delims=" %%i IN (%filePath%\env\Lib\site-packages\{{ cookiecutter.package_slug }}\_options.py) DO set options=%%i

@@ -13,7 +13,7 @@ For example `install_on_windows.cmd C:\imcity`. Do not add a trailing slash.
 
 If installed without specifying a location the default locations are:
 
-Windows: `C:\`
+Windows: `C:`
 
 Debian: `/opt`
 
