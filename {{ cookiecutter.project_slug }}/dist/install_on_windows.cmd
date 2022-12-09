@@ -16,6 +16,7 @@ set pinFail=0
 pip install -r %requirements% || set pinFail=1
 pip install %target%
 mklink /H %filePath%\{{ cookiecutter.project_slug }}.exe %filePath%\env\Scripts\{{ cookiecutter.project_slug }}.exe
+mklink /H %filePath%\bin\{{ cookiecutter.project_slug }}.exe %filePath%\env\Scripts\{{ cookiecutter.project_slug }}.exe
 xcopy %~dp0config.{{ cookiecutter.config_file_type }} %filePath%\ /F/Q
 xcopy %~dp0readme_for_app.md %filePath%\readme.md /F/Q
 xcopy %~dp0resources %filePath%\ /F/Q/S/E
