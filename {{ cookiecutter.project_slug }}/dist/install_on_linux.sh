@@ -37,4 +37,5 @@ if [[ $pinFail = 1 ]]
 then
   echo WARNING: pinned versions of dependencies could not be installed. Instead dependency resolution was performed by pip, it will probably work but is not exactly as tested.
 fi
+echo Consider adding "$filePath"/bin to your PATH for quick access to {{ cookiecutter.project_name }}
 echo "*******************************"
