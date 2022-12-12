@@ -38,6 +38,9 @@ if sys.platform in ("linux", "darwin"):
 if not {{ cookiecutter.initialise_poetry }}:
     exit(0)
 
+# Set poetry to keep its venv in the local directory
+subprocess.run(["poetry", "config", "--local", "virtualenvs.in-project", "true"])
+
 # initialise as a poetry project
 subprocess.run(["poetry", "init"])
 
