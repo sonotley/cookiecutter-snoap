@@ -22,7 +22,7 @@ def get_data_path():
 
 def _get_path(item: str, linux_loc: Path):
     if install_method == "one_dir":
-        return install_target / project_name / item
+        return install_target / item
 
     if install_method == "linux":
         return linux_loc / project_name / item
