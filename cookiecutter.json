@@ -7,5 +7,6 @@
   "license": "Private",
   "python_min_version": "3.8",
   "config_file_type": ["none", "yaml", "toml", "ini"],
-  "initialise_poetry": true
+  "initialise_poetry": true,
+  "include_github_autorelease": true
 }

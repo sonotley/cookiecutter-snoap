@@ -1,6 +1,18 @@
 import os
 import subprocess
 import sys
+import shutil
+
+
+def resolve_boolean(val):
+    if isinstance(val, bool):
+        return val
+    if isinstance(val, str) and val.lower() in ("y", "yes", "true", "t", "1"):
+        return True
+    if val == 1:
+        return True
+    return False
+
 
 # Remove config files other than the one selected (if any)
 CONFIG_FILE_TYPES = {"yaml", "toml", "ini"}
@@ -11,12 +23,14 @@ REMOVE_PATHS = [
     for x in CONFIG_FILE_TYPES - {"{{ cookiecutter.config_file_type }}"}
 ]
 
+if not resolve_boolean("{{ cookiecutter.include_github_autorelease }}"):
+    REMOVE_PATHS.append(".github")
 
 for path in REMOVE_PATHS:
     path = path.strip()
     if path and os.path.exists(path):
         if os.path.isdir(path):
-            os.rmdir(path)
+            shutil.rmtree(path)
         else:
             os.unlink(path)
 
@@ -35,7 +49,7 @@ if sys.platform in ("linux", "darwin"):
     subprocess.run(["chmod", "+x", "build/build.sh"])
 
 # !!!Anything after this will only run if initialise_poetry=True!!!
-if not {{ cookiecutter.initialise_poetry }}:
+if not resolve_boolean("{{ cookiecutter.initialise_poetry }}"):
     exit(0)
 
 # Set poetry to keep its venv in the local directory

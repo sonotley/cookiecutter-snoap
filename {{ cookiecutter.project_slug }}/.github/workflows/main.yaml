@@ -1,0 +1,32 @@
+name: Release
+
+on:
+  push:
+    tags:
+    - '*'
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    env:
+      PYTHON_KEYRING_BACKEND: keyring.backends.null.Keyring
+    permissions:
+      contents: write
+    steps:
+    - name: Add poetry
+      uses: abatilo/actions-poetry@v2
+    - uses: actions/checkout@v3
+    - name: Create poetry env
+      run: poetry install --with dev
+    - name: Build project
+      run: ./build/build.sh
+    - name: Zip dist directory
+      uses: vimtor/action-zip@v1
+      with:
+        files: dist/
+        dest: {{ cookiecutter.project_slug }}{% raw %}${{  github.ref_name }}{% endraw %}.zip
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: {{ cookiecutter.project_slug }}{% raw %}${{  github.ref_name }}{% endraw %}.zip
+        body: "An automatic build of {{ cookiecutter.project_name }}"
