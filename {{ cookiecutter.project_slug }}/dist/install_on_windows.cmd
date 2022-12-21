@@ -25,7 +25,7 @@ mklink /H %filePath%\{{ cookiecutter.project_slug }}.exe %filePath%\env\Scripts\
 mklink /H %filePath%\bin\{{ cookiecutter.project_slug }}.exe %filePath%\env\Scripts\{{ cookiecutter.project_slug }}.exe
 
 rem Copy files from installer directory to their target locations
-xcopy %~dp0config.{{ cookiecutter.config_file_type }} %filePath%\ /F/Q
+{% if cookiecutter.config_file_type != "none" %}xcopy %~dp0config.{{ cookiecutter.config_file_type }} %filePath%\ /F/Q{% endif %}
 xcopy %~dp0readme_for_app.md %filePath%\readme.md /F/Q
 xcopy %~dp0resources %filePath%\ /F/Q/S/E
 xcopy %~dp0data %filePath%\ /F/Q/S/E
