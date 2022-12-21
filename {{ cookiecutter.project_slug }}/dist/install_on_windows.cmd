@@ -15,7 +15,7 @@ call %filePath%\env\Scripts\activate
 
 rem Install the pinned dependencies from requirements.txt, then install the wheel
 FOR /F "delims=" %%i IN ('dir /b %~dp0{{ cookiecutter.package_slug }}*.whl') DO set target=%~dp0%%i
-FOR /F "delims=" %%i IN ('dir /b %~dp0requirements.txt') DO set requirements=%~dp0%%i
+FOR /F "delims=" %%i IN ('dir /b %~dp0requirements.txt') DO set requirements=%~dp0%%i || echo "WARNING: no requirements file found"
 set pinFail=0
 pip install -r %requirements% || set pinFail=1
 pip install %target%
