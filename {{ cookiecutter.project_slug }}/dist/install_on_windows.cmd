@@ -30,7 +30,7 @@ set "rcopy=robocopy /S /E /XC /XN /XO /NFL /NDL /NJH /NJS /nc /ns /np"
 {% if cookiecutter.config_file_type != "none" %}
 %rcopy% %~dp0 %filePath% config.{{ cookiecutter.config_file_type }}
 {% endif %}
-xcopy %~dp0readme_for_app.md %filePath%\readme.md /F/Q
+copy %~dp0readme_for_app.md %filePath%\readme.md
 %rcopy% %~dp0resources %filePath%\
 %rcopy% %~dp0data %filePath%\
 
