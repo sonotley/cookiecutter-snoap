@@ -22,6 +22,7 @@ pip install %target%
 
 rem Create links to the binary for convenience, one at top level and one in a bin directory
 mklink /H %filePath%\{{ cookiecutter.project_slug }}.exe %filePath%\env\Scripts\{{ cookiecutter.project_slug }}.exe
+if not exist %filePath%\bin\ mkdir %filePath%\bin
 mklink /H %filePath%\bin\{{ cookiecutter.project_slug }}.exe %filePath%\env\Scripts\{{ cookiecutter.project_slug }}.exe
 
 rem Copy files from installer directory to their target locations
