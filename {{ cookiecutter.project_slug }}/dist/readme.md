@@ -28,5 +28,11 @@ To uninstall simply delete the installation directory
 
 ### Updating
 
-To update, rename your current installation folder, install the new version, then copy across anything that you need from the
-old one before deleting it.
+In-place upgrades are experimentally supported. You can try just running the new installer with the same filepath
+and it _shouldn't_ overwrite any of your config, resources or data. However, always backup first! 
+
+If that doesn't work just delete the old version, install the new version, then copy across anything that you need from
+your backup before deleting it.
+
+Neither of these methods makes any attempt to 'upgrade' your files so if the new version expects a different config file
+or different data/resources you'll need to make those changes and/or delete the old stuff manually.

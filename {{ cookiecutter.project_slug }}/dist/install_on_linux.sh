@@ -19,14 +19,14 @@ pip install "${target[0]}"
 
 # Create links to the binary for convenience, one at top level and one in a bin directory
 ln -s "$filePath"/env/bin/{{ cookiecutter.project_slug }} "$filePath"/{{ cookiecutter.project_slug }}
-mkdir "$filePath"/bin
+mkdir -p "$filePath"/bin
 ln -s "$filePath"/env/bin/{{ cookiecutter.project_slug }} "$filePath"/bin/{{ cookiecutter.project_slug }}
 
 # Copy files from installer directory to their target locations
-{% if cookiecutter.config_file_type != "none" %}cp "$(dirname "$0")"/config.{{ cookiecutter.config_file_type }} "$filePath"/config.{{ cookiecutter.config_file_type }}{% endif %}
-cp -r "$(dirname "$0")"/data "$filePath"/data
-cp -r "$(dirname "$0")"/resources "$filePath"/resources
-cp -r "$(dirname "$0")"/readme_for_app.md "$filePath"/readme.md
+{% if cookiecutter.config_file_type != "none" %}cp -n "$(dirname "$0")"/config.{{ cookiecutter.config_file_type }} "$filePath"/config.{{ cookiecutter.config_file_type }}{% endif %}
+cp -rn "$(dirname "$0")"/data "$filePath"/data
+cp -rn "$(dirname "$0")"/resources "$filePath"/resources
+cp "$(dirname "$0")"/readme_for_app.md "$filePath"/readme.md
 
 # Record details of installation method in a Python module accessible at run-time
 echo 'install_method, install_target = "one_dir","'"$filePath"'"' > "$filePath"/env/lib/python*/site-packages/{{ cookiecutter.package_slug }}/_options.py

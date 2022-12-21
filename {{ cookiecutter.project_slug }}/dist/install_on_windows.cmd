@@ -25,10 +25,14 @@ mklink /H %filePath%\{{ cookiecutter.project_slug }}.exe %filePath%\env\Scripts\
 mklink /H %filePath%\bin\{{ cookiecutter.project_slug }}.exe %filePath%\env\Scripts\{{ cookiecutter.project_slug }}.exe
 
 rem Copy files from installer directory to their target locations
-{% if cookiecutter.config_file_type != "none" %}xcopy %~dp0config.{{ cookiecutter.config_file_type }} %filePath%\ /F/Q{% endif %}
-xcopy %~dp0readme_for_app.md %filePath%\readme.md /F/Q
-xcopy %~dp0resources %filePath%\ /F/Q/S/E
-xcopy %~dp0data %filePath%\ /F/Q/S/E
+rem Alias robocopy with switches that prevent any overwriting and suppress output
+set "rcopy=robocopy /S /E /XC /XN /XO /NFL /NDL /NJH /NJS /nc /ns /np"
+{% if cookiecutter.config_file_type != "none" %}
+rcopy %~dp0 %filePath% config.{{ cookiecutter.config_file_type }}
+{% endif %}
+xcopy %~dp0readme_for_app.md %filePath%\readme.md /Q
+rcopy %~dp0resources %filePath%\
+rcopy %~dp0data %filePath%\
 
 rem Record details of installation method in a Python module accessible at run-time
 echo install_method, install_target = "one_dir","%filePath%" > %filePath%\env\Lib\site-packages\{{ cookiecutter.package_slug }}\_options.py
@@ -36,4 +40,5 @@ echo install_method, install_target = "one_dir","%filePath%" > %filePath%\env\Li
 echo *************************
 echo Installation complete
 if %pinFail%==1 echo WARNING: pinned versions of dependencies could not be installed. Instead dependency resolution was performed by pip, it will probably work but is not exactly as tested.
+echo Consider adding %filePath%/bin to your PATH for quick access to {{ cookiecutter.project_name }}
 echo *************************
