@@ -29,8 +29,13 @@ The short version is:
 - Write some code, starting from `__main__.run`
 - Write some tests in the `test` module
 - Run the tests in your local environment by typing `pytest`
-- Run the tests with tox and perform a build if they pass by executing `./build/build.sh`
-- Distribute the `dist` directory to your users.
+- To build locally:
+  - Run the tests with tox and perform a build if they pass by executing `./build/build.sh` 
+  - If you just want a build without the tox tests, set `SNOAP_BUILD_TEST=SKIP`
+  - Distribute the `dist` directory to your users.
+- To build with GitHub actions
+  - Push your project to GitHub, then push a tag with the version number
+  - A release will be created automatically on the repo site
 - Your users run the appropriate install script for their platform (only dependency is Python) and get a directory containing config file and executable
 - When they double-click the executable, it executes you code starting from `__main__.run()`
 

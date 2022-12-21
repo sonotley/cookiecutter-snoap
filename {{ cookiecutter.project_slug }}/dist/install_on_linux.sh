@@ -8,7 +8,7 @@ echo Installing to "$filePath"
 
 # Create and activate a Python venv
 echo Building Python virtual environment
-python3 -m venv "$filePath"/env
+python3 -m venv "$filePath"/env --clear
 target=("$(dirname "$0")"/{{ cookiecutter.package_slug }}*.whl)
 source "$filePath"/env/bin/activate
 
