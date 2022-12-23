@@ -25,8 +25,9 @@ jobs:
       uses: vimtor/action-zip@v1
       with:
         files: dist/
-        dest: {{ cookiecutter.project_slug }}{% raw %}${{  github.ref_name }}{% endraw %}.zip
+        dest: {{ cookiecutter.project_slug }}-{% raw %}${{  github.ref_name }}{% endraw %}.zip
     - uses: ncipollo/release-action@v1
       with:
-        artifacts: {{ cookiecutter.project_slug }}{% raw %}${{  github.ref_name }}{% endraw %}.zip
+        artifactErrorsFailBuild: true
+        artifacts: {{ cookiecutter.project_slug }}-{% raw %}${{  github.ref_name }}{% endraw %}.zip
         body: "An automatic build of {{ cookiecutter.project_name }}"
