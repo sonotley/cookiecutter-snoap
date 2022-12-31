@@ -7,6 +7,9 @@ poetry export -f requirements.txt --with dev --output build/requirements-with-de
 if [ "$SNOAP_BUILD_TEST" = "GLOBAL_TOX" ]
 then
   tox
+if [ "$SNOAP_BUILD_TEST" = "GLOBAL_TOX_SKIPMISSING" ]
+then
+  tox --skip-missing-interpreters
 elif [ "$SNOAP_BUILD_TEST" = "GLOBAL_PYTEST" ]
 then
   pytest
@@ -15,7 +18,11 @@ then
   poetry run pytest
 elif [ "$SNOAP_BUILD_TEST" = "PROJ_TOX" ] || [ "$SNOAP_BUILD_TEST" = "TOX" ] || [ -z "$SNOAP_BUILD_TEST"]
 then
+#  This is the default behaviour, run tox from Poetry to be sure it exists
   poetry run tox
+elif [ "$SNOAP_BUILD_TEST" = "PROJ_TOX_SKIPMISSING" ] || [ "$SNOAP_BUILD_TEST" = "TOX_SKIPMISSING" ] || [ -z "$SNOAP_BUILD_TEST"]
+then
+  poetry run tox --skip-missing-interpreters
 elif [ "$SNOAP_BUILD_TEST" = "SKIP" ]
 then
   echo Tests skipped due to SNOAP_BUILD_TEST setting
