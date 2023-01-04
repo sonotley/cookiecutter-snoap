@@ -18,9 +18,9 @@ pip install -Ur "$(dirname "$0")"/requirements.txt || { echo Installation with p
 pip install "${target[0]}"
 
 # Create links to the binary for convenience, one at top level and one in a bin directory
-ln -s "$filePath"/env/bin/{{ cookiecutter.project_slug }} "$filePath"/{{ cookiecutter.project_slug }}
+ln -sf "$filePath"/env/bin/{{ cookiecutter.project_slug }} "$filePath"/{{ cookiecutter.project_slug }}
 mkdir -p "$filePath"/bin
-ln -s "$filePath"/env/bin/{{ cookiecutter.project_slug }} "$filePath"/bin/{{ cookiecutter.project_slug }}
+ln -sf "$filePath"/env/bin/{{ cookiecutter.project_slug }} "$filePath"/bin/{{ cookiecutter.project_slug }}
 
 # Copy files from installer directory to their target locations
 {% if cookiecutter.config_file_type != "none" %}cp -n "$(dirname "$0")"/config.{{ cookiecutter.config_file_type }} "$filePath"/config.{{ cookiecutter.config_file_type }}{% endif %}

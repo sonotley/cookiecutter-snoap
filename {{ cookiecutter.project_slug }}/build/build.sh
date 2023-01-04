@@ -4,10 +4,12 @@ set -e
 poetry export -f requirements.txt --output dist/requirements.txt
 poetry export -f requirements.txt --with dev --output build/requirements-with-dev.txt
 
+# shellcheck disable=SC1019
+# shellcheck disable=SC1073
 if [ "$SNOAP_BUILD_TEST" = "GLOBAL_TOX" ]
 then
   tox
-if [ "$SNOAP_BUILD_TEST" = "GLOBAL_TOX_SKIPMISSING" ]
+elif [ "$SNOAP_BUILD_TEST" = "GLOBAL_TOX_SKIPMISSING" ]
 then
   tox --skip-missing-interpreters
 elif [ "$SNOAP_BUILD_TEST" = "GLOBAL_PYTEST" ]
@@ -20,7 +22,7 @@ elif [ "$SNOAP_BUILD_TEST" = "PROJ_TOX" ] || [ "$SNOAP_BUILD_TEST" = "TOX" ] || 
 then
 #  This is the default behaviour, run tox from Poetry to be sure it exists
   poetry run tox
-elif [ "$SNOAP_BUILD_TEST" = "PROJ_TOX_SKIPMISSING" ] || [ "$SNOAP_BUILD_TEST" = "TOX_SKIPMISSING" ] || [ -z "$SNOAP_BUILD_TEST"]
+elif [ "$SNOAP_BUILD_TEST" = "PROJ_TOX_SKIPMISSING" ] || [ "$SNOAP_BUILD_TEST" = "TOX_SKIPMISSING" ]
 then
   poetry run tox --skip-missing-interpreters
 elif [ "$SNOAP_BUILD_TEST" = "SKIP" ]

@@ -15,7 +15,7 @@ jobs:
       contents: write
     steps:
     - name: setup pyenv
-      uses: "gabrielfalcao/pyenv-action@v9"
+      uses: "gabrielfalcao/pyenv-action@v11"
       with:
         default: {{ cookiecutter.python_max_version }}
         versions: {{ cookiecutter.__python_versions }}
