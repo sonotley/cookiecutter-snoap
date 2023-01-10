@@ -54,6 +54,8 @@ Follow the prompts to set it up, you now have a snoap project with a Poetry virt
 The snoap development workflow looks like this:
 
 - Write some code, starting from `__main__.run`
+- Populate the config file and the `data` and `resources` directories if/as required for your application
+  - Use the functions provided in the `paths` module to refer to these file locations
 - Write some tests in the `test` module
 - Run the tests in your local environment by typing `pytest`
 - Advance the version number by running `./`
@@ -73,18 +75,18 @@ After running the cookiecutter, you'll have a project something like this, depen
 
 ```commandline
 my-lovely-project
-├── build
+├── build/
 │   ├── build.sh
 │   └── version.py
-├── dist
+├── dist/
 │   ├── config.yaml
-│   ├── data
+│   ├── data/
 │   ├── install_on_linux.sh
 │   ├── install_on_windows.cmd
 │   ├── readme.md
 │   ├── readme_for_app.md
-│   └── resources
-├── my_lovely_project
+│   └── resources/
+├── my_lovely_project/
 │   ├── __init__.py
 │   ├── __main__.py
 │   ├── _options.py
@@ -92,7 +94,7 @@ my-lovely-project
 │   └── version.txt
 ├── pyproject.toml
 ├── readme.md
-├── test
+├── test/
 │   ├── __init__.py
 │   ├── test_paths.py
 │   └── version.txt
@@ -100,7 +102,7 @@ my-lovely-project
 
 ```
 
-### The build directory
+### The `build` directory
 
 This directory contains scripts related to building the project. 
 
@@ -110,3 +112,56 @@ This directory contains scripts related to building the project.
 It wraps `poetry version` so takes the same arguments. 
 The reason for this wrapper is to ensure the version number is written to `VERSION.TXT` as well as `pyproject.toml`. 
 This, together with some boilerplate code in `__init.py__` makes it possible to get the version number at runtime using the module-level `__version__` attribute.
+
+### The `dist` directory
+
+This directory contains files that will be included as-is in the distribution you provide to your end users. This includes:
+
+- Two installation scripts, one for Windows (in `cmd`) and one for Linux (in `bash`)
+- A `readme.md` file. This will be the readme your users see _before_ installing your application.
+- A `readme_for_app.md` file. This will be renamed to `readme.md` and included in the installation location, so it should contain instructions for use.
+- A configuration file in the format you selected (unless you selected 'none')
+- A `resources` directory. This is where you should put any non-Python files that your application needs.
+- A `data` directory. This is where your program should write frequently-changing data like caches, downloads etc.
+
+### The package directory
+
+This directory is named using the `package_slug` parameter you specified. It is where all your Python code should reside.
+This package will be built and included in your distribution along with the files in the `dist` directory. 
+There are some Python modules included in the package by default.
+
+- `__init__.py` marks this directory as being a Python package. It also contains boilerplate code to read the version number from `version.txt` and assign it to module variable `__version__`
+- `__main__.py` is the entry point for your application, specifically the function `run`. This will be called when your application is executed.
+- `_options.py` is populated automatically by the installer. It is used by `paths.py` to determine at runtime how and where the application was installed.
+- `paths.py` provides a set of functions that return paths to the configuration file, `data` and `resources` directories
+- `version.txt` contains the version number of your package. Don't change this manually, it's managed by `build/version.py`
+
+### The `test` directory
+
+This is where you write tests. At first, it will just have an `__init__.py` and `version.txt` same as the package directory. 
+You can add as many test modules as you need, just follow the [conventions for auto discovery in pytest](https://docs.pytest.org/en/7.2.x/explanation/goodpractices.html#test-discovery)
+
+These tests will be run by tox before your project is built.
+
+### Top-level files
+
+In addition to the directories described above, the project contains the following files:
+
+- `pyproject.toml` a standard file used by Python packaging tools (in this case Poetry) to store and retrieve package metadata.
+- `tox.ini` defines what environments tox will use to run the tests. This is automatically populated based on your specified min and max Python versions.
+- `readme.md` is the readme for the project. This is what will appear on the repo page in GitHub so it should contain information for developers and users.
+
+## Tips & Troubleshooting
+
+### What does the `paths` module do if I just run the code without installing (from IDE/debugger for example)?
+
+All of the `paths` functions will return the current working directory in this case.
+
+#### But my config/data/resources isn't in the same directory as my code!
+
+In most IDEs you can specify the working directory to be used when you click 'run' or 'debug' so just set that to wherever you are keeping those files.
+
+#### What about running from terminal? I keep getting 'ModuleNotFound' 
+
+Yeah, it's to do with relative imports and stuff... I'm working on a solution.
+
