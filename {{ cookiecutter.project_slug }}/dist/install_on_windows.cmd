@@ -32,6 +32,8 @@ set "rcopy=robocopy /S /E /XC /XN /XO /NFL /NDL /NJH /NJS /nc /ns /np"
 (%rcopy% %~dp0 %filePath% config.{{ cookiecutter.config_file_type }}) ^& IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0
 {% endif %}
 copy %~dp0readme_for_app.md %filePath%\readme.md
+if not exist %~dp0data\ mkdir %~dp0data
+if not exist %~dp0resources\ mkdir %~dp0resources
 (%rcopy% %~dp0resources %filePath%\) ^& IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0
 (%rcopy% %~dp0data %filePath%\) ^& IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0
 

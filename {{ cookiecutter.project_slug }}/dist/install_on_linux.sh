@@ -24,6 +24,8 @@ ln -sf "$filePath"/env/bin/{{ cookiecutter.project_slug }} "$filePath"/bin/{{ co
 
 # Copy files from installer directory to their target locations
 {% if cookiecutter.config_file_type != "none" %}cp -n "$(dirname "$0")"/config.{{ cookiecutter.config_file_type }} "$filePath"/config.{{ cookiecutter.config_file_type }}{% endif %}
+mkdir -p "$(dirname "$0")"/data
+mkdir -p "$(dirname "$0")"/resources
 cp -rn "$(dirname "$0")"/data "$filePath"/data
 cp -rn "$(dirname "$0")"/resources "$filePath"/resources
 cp "$(dirname "$0")"/readme_for_app.md "$filePath"/readme.md
