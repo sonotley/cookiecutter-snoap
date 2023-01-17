@@ -47,6 +47,7 @@ if not os.path.exists(DATA_DIR):
 if sys.platform in ("linux", "darwin"):
     subprocess.run(["chmod", "+x", "dist/install_on_linux.sh"])
     subprocess.run(["chmod", "+x", "build/build.sh"])
+    subprocess.run(["chmod", "+x", "build/version.py"])
 
 # !!!Anything after this will only run if initialise_poetry=True!!!
 if not resolve_boolean("{{ cookiecutter.initialise_poetry }}"):

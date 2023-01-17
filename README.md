@@ -60,7 +60,7 @@ The snoap development workflow looks like this:
   - Use the functions provided in the `paths` module to refer to these file locations
 - Write some tests in the `test` module
 - Run the tests in your local environment by typing `pytest`
-- Advance the version number by running `python build/version.py [major/minor/patch]`
+- Advance the version number by running `./build/version.py [major/minor/patch]`
 - To build locally:
   - Run the tests with tox and perform a build if they pass by executing `./build/build.sh` 
   - If you just want a build without the tox tests, set `SNOAP_BUILD_TEST=SKIP`
@@ -112,7 +112,7 @@ This directory contains scripts related to building the project.
 
 `version.py` is a Python script which is used to update the version number of your project.
 It wraps `poetry version` so takes the same arguments. 
-The reason for this wrapper is to ensure the version number is written to `VERSION.TXT` as well as `pyproject.toml`. 
+The reason for this wrapper is to ensure the version number is written to `version.txt` as well as `pyproject.toml`. 
 This, together with some boilerplate code in `__init.py__` makes it possible to get the version number at runtime using the module-level `__version__` attribute.
 
 ### The `dist` directory

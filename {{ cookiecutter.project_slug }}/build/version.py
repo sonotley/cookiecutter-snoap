@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Script to apply versions in projects using Poetry
 
 Wraps `poetry version` and creates `version.txt` in each package
@@ -20,8 +21,11 @@ if len(sys.argv) > 2:
     print("Too many arguments")
 
 else:
-    subprocess.run(["poetry", "version", sys.argv[1]])
-    current_version = str(subprocess.check_output(["poetry", "version"])).strip()
+    if len(sys.argv) > 1:
+        subprocess.run(["poetry", "version", sys.argv[1]])
+    else:
+        subprocess.run(["poetry", "version"])
+    current_version = subprocess.check_output(["poetry", "version"]).decode(sys.stdout.encoding).strip()
     write_version_to_packages(current_version)
 
 
