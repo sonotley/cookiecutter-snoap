@@ -1,4 +1,4 @@
-{%- if cookiecutter.config_file_type == "yaml" %}import pyyaml
+{%- if cookiecutter.config_file_type == "yaml" %}import yaml
 
 
 {% endif -%}
