@@ -3,6 +3,7 @@ import os
 import pytest
 from pathlib import Path
 import tempfile
+import subprocess
 
 
 @pytest.fixture
@@ -12,15 +13,11 @@ def temp_dir():
 
 
 def test_cookiecutter_no_hooks(temp_dir):
-    """Test that no errors are thrown running the cookiecutter itself with no hooks"""
+    """Run the cookiecutter itself with no hooks, then run the test package of the created project"""
     subprocess.run(["cookiecutter", ".", "--no-input", "-f", "-o", str(temp_dir), "--accept-hooks", "no"], check=True)
     assert os.path.exists(temp_dir / 'my-lovely-project')
 
+    os.chdir(temp_dir / 'my-lovely-project')
+    project_pytest = subprocess.run(["pytest"])
+    assert project_pytest.returncode == 0
 
-# def test_install():
-#     if sys.platform == "linux":
-#         # Assumes existence of bash
-#         subprocess.run(["/bin/bash", "my-lovely-project/dist/install_on_linux.sh"], check=True)
-#     elif sys.platform == "darwin":
-#         # may well fail on zsh
-#         subprocess.run(["sh", "my-lovely-project/dist/install_on_linux.sh", "~"], check=True)

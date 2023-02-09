@@ -1,9 +1,11 @@
 from pathlib import Path
 import {{ cookiecutter.package_slug }}._options as options
+import os
 
 project_name = "{{ cookiecutter.project_slug }}"
 install_method = options.install_method
 install_target = Path(options.install_target)
+path_var_name = "SNOAP_" + "{{ cookiecutter.package_slug }}".upper() + "_PATH"
 
 
 def get_config_path():
@@ -27,4 +29,11 @@ def _get_path(item: str, linux_loc: Path):
     if install_method == "linux":
         return linux_loc / project_name / item
 
-    return Path(Path.cwd() / item).absolute()
+    return Path(_get_default_parent() / item).absolute()
+
+
+def _get_default_parent():
+    if os.getenv(path_var_name, default="") != "":
+        return Path(os.environ[path_var_name])
+
+    return Path.cwd()

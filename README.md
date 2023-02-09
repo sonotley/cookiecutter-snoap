@@ -163,7 +163,27 @@ All of the `paths` functions will return the current working directory in this c
 
 In most IDEs you can specify the working directory to be used when you click 'run' or 'debug' so just set that to wherever you are keeping those files.
 
-#### What about running from terminal? I keep getting 'ModuleNotFound' 
+#### I'm not using an IDE, I'm running from terminal.
 
-Yeah, it's to do with relative imports and stuff... I'm working on a solution.
+You can invoke the app from terminal during development with the command from the directory containing `pyproject.toml`.
+But if this directory isn't where your config/data/resources are located things won't work well.
+
+    poetry run python -m your_package_name
+
+You can overcome this by setting the environment variable `SNOAP_YOUR_PACKAGE_NAME_PATH` to an absolute path, or path relative to your working directory.
+
+    SNOAP_YOUR_PACKAGE_NAME_PATH = '.local' poetry run python -m your_package_name
+
+### I installed an app using snoap then one day it stopped working with some cryptic error about `encodings`!
+
+This can happen if the Python installation that was used to create the virtual environment no longer exists or cannot be found.
+This is far more likely to happen on Windows where there is no 'system' Python. It can happen in various scenarios:
+
+- Python was installed for the user who performed the installation only and that user account has been deleted
+- A newer version of Python was installed and the old version was deleted
+
+It can also happen on Linux if you use something like `pyenv` to run multiple Python versions and you have removed the version that was used for installation.
+
+I plan to provide a script to refresh the virtual environment should this happen, and maybe find some way of warning the user at install time if
+they are using a Python that doesn't look permanent.
 
