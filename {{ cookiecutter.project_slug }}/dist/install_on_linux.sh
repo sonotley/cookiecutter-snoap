@@ -1,43 +1,59 @@
 #!/usr/bin/env bash
+
+printRule () {
+printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' "$1"
+}
+
+bold=$(tput bold)
+normal=$(tput sgr0)
+yellow=$(tput setaf 3)
+green=$(tput setaf 2)
+
 set -e
-echo "*************************"
-echo Installing {{ cookiecutter.project_name }}
-echo "*************************"
-filePath=${1:-"/opt"}/{{ cookiecutter.project_slug }}
-echo Installing to "$filePath"
+printRule '-'
+echo ${bold}Installing {{ cookiecutter.project_name }}${normal}
+printRule '-'
+targetDir=${1:-"/opt"}/{{ cookiecutter.project_slug }}
+sourceDir="$(dirname "$0")"
+echo Installing from "$sourceDir" to "$targetDir"
 
 # Create and activate a Python venv
 echo Building Python virtual environment
-python3 -m venv "$filePath"/env --clear
-target=("$(dirname "$0")"/{{ cookiecutter.package_slug }}*.whl)
-source "$filePath"/env/bin/activate
+echo Using interpreter $(which python3)
+python3 -m venv "$targetDir"/env --clear
+tmp=("$sourceDir"/{{ cookiecutter.package_slug }}*.whl)
+wheel="${tmp[0]}"
+source "$targetDir"/env/bin/activate
 
 # Install the pinned dependencies from requirements.txt, then install the wheel
-pip install --upgrade pip
-pip install -Ur "$(dirname "$0")"/requirements.txt || { echo Installation with pinned dependencies failed, attempting local dependency resolution; pinFail=1;}
-pip install "${target[0]}"
+python3 -m pip install --upgrade pip
+python3 -m pip install -Ur "$sourceDir"/requirements.txt || { echo Installation with pinned dependencies failed, attempting local dependency resolution; pinFail=1;}
+python3 -m pip install "$wheel"
 
 # Create links to the binary for convenience, one at top level and one in a bin directory
-ln -sf "$filePath"/env/bin/{{ cookiecutter.project_slug }} "$filePath"/{{ cookiecutter.project_slug }}
-mkdir -p "$filePath"/bin
-ln -sf "$filePath"/env/bin/{{ cookiecutter.project_slug }} "$filePath"/bin/{{ cookiecutter.project_slug }}
+ln -sf "$targetDir"/env/bin/{{ cookiecutter.project_slug }} "$targetDir"/{{ cookiecutter.project_slug }}
+mkdir -p "$targetDir"/bin
+ln -sf "$targetDir"/env/bin/{{ cookiecutter.project_slug }} "$targetDir"/bin/{{ cookiecutter.project_slug }}
 
 # Copy files from installer directory to their target locations
-{% if cookiecutter.config_file_type != "none" %}cp -n "$(dirname "$0")"/config.{{ cookiecutter.config_file_type }} "$filePath"/config.{{ cookiecutter.config_file_type }}{% endif %}
-mkdir -p "$(dirname "$0")"/data
-mkdir -p "$(dirname "$0")"/resources
-cp -rn "$(dirname "$0")"/data "$filePath"/data
-cp -rn "$(dirname "$0")"/resources "$filePath"/resources
-cp "$(dirname "$0")"/readme_for_app.md "$filePath"/readme.md
+{% if cookiecutter.config_file_type != "none" %}cp -n "$sourceDir"/config.{{ cookiecutter.config_file_type }} "$targetDir"/config.{{ cookiecutter.config_file_type }}{% endif %}
+mkdir -p "$sourceDir"/data
+mkdir -p "$sourceDir"/resources
+cp -rn "$sourceDir"/data "$targetDir"/data
+cp -rn "$sourceDir"/resources "$targetDir"/resources
+cp "$sourceDir"/readme_for_app.md "$targetDir"/readme.md
 
 # Record details of installation method in a Python module accessible at run-time
-echo 'install_method, install_target = "one_dir","'"$filePath"'"' > "$filePath"/env/lib/python*/site-packages/{{ cookiecutter.package_slug }}/_options.py
+echo 'install_method, install_target = "one_dir","'"$targetDir"'"' > "$targetDir"/env/lib/python*/site-packages/{{ cookiecutter.package_slug }}/_options.py
 
-echo "*******************************"
-echo Installation complete
+printRule '='
+echo ${bold}Installation complete${normal}
 if [[ $pinFail = 1 ]]
 then
-  echo WARNING: pinned versions of dependencies could not be installed. Instead dependency resolution was performed by pip, it will probably work but is not exactly as tested.
+  echo ${yellow}WARNING: pinned versions of dependencies could not be installed. Instead dependency resolution was performed by pip, it will probably work but is not exactly as tested.${normal}
 fi
-echo Consider adding "$filePath"/bin to your PATH for quick access to {{ cookiecutter.project_name }}
-echo "*******************************"
+if [[ $PATH != *:$targetDir/bin* ]]
+then
+  echo ${green}Consider adding "$targetDir"/bin to your PATH for quick access to {{ cookiecutter.project_name }}${normal}
+fi
+printRule '='
