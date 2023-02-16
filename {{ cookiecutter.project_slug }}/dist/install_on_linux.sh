@@ -13,7 +13,7 @@ set -e
 printRule '-'
 echo ${bold}Installing {{ cookiecutter.project_name }}${normal}
 printRule '-'
-targetParentDir="${1:-'/opt'}"
+targetParentDir="${1:-/opt}"
 targetDir="$targetParentDir/{{ cookiecutter.project_slug }}"
 sourceDir="$(dirname "$0")"
 echo Installing from "$sourceDir" to "$targetDir"
