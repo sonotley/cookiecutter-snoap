@@ -13,7 +13,8 @@ set -e
 printRule '-'
 echo ${bold}Installing {{ cookiecutter.project_name }}${normal}
 printRule '-'
-targetDir=${1:-"/opt"}/{{ cookiecutter.project_slug }}
+targetParentDir="${1:-'/opt'}"
+targetDir="$targetParentDir/{{ cookiecutter.project_slug }}"
 sourceDir="$(dirname "$0")"
 echo Installing from "$sourceDir" to "$targetDir"
 
@@ -45,6 +46,20 @@ cp "$sourceDir"/readme_for_app.md "$targetDir"/readme.md
 
 # Record details of installation method in a Python module accessible at run-time
 echo 'install_method, install_target = "one_dir","'"$targetDir"'"' > "$targetDir"/env/lib/python*/site-packages/{{ cookiecutter.package_slug }}/_options.py
+
+if [[ $sourceDir != $targetDir/install ]]
+then
+  # Save the installer near the app
+  [ -d "$targetDir"/install ] && rm -r "$targetDir"/install
+  mkdir "$targetDir"/install
+  cp -r "$sourceDir"/* "$targetDir"/install
+
+  # Create a script to refresh the app if it gets broken by Python env changes for example
+  refreshScript="$targetDir"/bin/refresh-{{ cookiecutter.project_slug }}.sh
+  echo '#!/usr/bin/env bash' > "$refreshScript"
+  echo "bash $targetDir/install/install_on_linux.sh $targetParentDir" >> "$refreshScript"
+  chmod +x "$refreshScript"
+fi
 
 printRule '='
 echo ${bold}Installation complete${normal}
