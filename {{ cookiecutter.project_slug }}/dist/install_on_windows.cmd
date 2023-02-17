@@ -2,7 +2,7 @@
 echo *************************
 echo Installing {{ cookiecutter.project_name }}
 echo *************************
-IF %1.==. set targetParentDir=C:\& GOTO install
+IF %1.==. set targetParentDir=C:& GOTO install
 set targetParentDir=%1
 
 rem Create and activate a Python venv
