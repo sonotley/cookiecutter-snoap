@@ -13,7 +13,7 @@ echo Installing from %sourceDir% to %targetDir%
 echo Building Python virtual environment
 py -3 -m venv %targetDir%\env --clear
 %targetDir%\env\Scripts\python.exe -m pip install --upgrade pip
-call %targetDir%\env\Scripts\activate
+call %targetDir%\env\Scripts\activate.bat
 
 rem Install the pinned dependencies from requirements.txt, then install the wheel
 FOR /F "delims=" %%i IN ('dir /b %sourceDir%{{ cookiecutter.package_slug }}*.whl') DO set target=%sourceDir%%%i
