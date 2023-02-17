@@ -7,8 +7,8 @@ set targetParentDir=%1
 
 rem Create and activate a Python venv
 :install
-targetDir=%targetParentDir%\{{ cookiecutter.project_slug }}
-sourceDir=%~dp0
+set targetDir=%targetParentDir%\{{ cookiecutter.project_slug }}
+set sourceDir=%~dp0
 echo Installing from %sourceDir% to %targetDir%
 echo Building Python virtual environment
 py -3 -m venv %targetDir%\env --clear
