@@ -16,10 +16,10 @@ py -c 'import sys; print(sys.executable, sys.version, sep="\n")'
 py -3 -m venv %targetDir%\env --clear
 %targetDir%\env\Scripts\python.exe -m pip install --upgrade pip
 call %targetDir%\env\Scripts\activate.bat
-echo 'After venv activation, py -3 is:'
-py -3 -c 'import sys; print(sys.executable, sys.version, sep="\n")'
+echo After venv activation, py -3 is:
+py -3 -c "import sys; print(sys.executable, sys.version, sep='\n')"
 echo and python is:
-python -c 'import sys; print(sys.executable, sys.version, sep="\n")'
+python -c "import sys; print(sys.executable, sys.version, sep='\n')"
 
 rem Install the pinned dependencies from requirements.txt, then install the wheel
 FOR /F "delims=" %%i IN ('dir /b %sourceDir%{{ cookiecutter.package_slug }}*.whl') DO set target=%sourceDir%%%i
