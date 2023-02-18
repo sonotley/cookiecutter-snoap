@@ -48,6 +48,12 @@ if not exist %sourceDir%resources\ mkdir %sourceDir%resources
 rem Record details of installation method in a Python module accessible at run-time
 echo install_method, install_target = "one_dir","%targetDir%" > %targetDir%\env\Lib\site-packages\{{ cookiecutter.package_slug }}\_options.py
 
+if %sourceDir% != %targetDir%\install (
+if exist %targetDir%\install\ rm -r %targetDir%\install
+mkdir %targetDir%\install
+%rcopy% %sourceDir% %targetDir%\install
+)
+
 echo *************************
 echo Installation complete
 if %pinFail%==1 echo WARNING: pinned versions of dependencies could not be installed. Instead dependency resolution was performed by pip, it will probably work but is not exactly as tested.
