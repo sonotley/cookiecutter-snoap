@@ -49,9 +49,14 @@ rem Record details of installation method in a Python module accessible at run-t
 echo install_method, install_target = "one_dir","%targetDir%" > %targetDir%\env\Lib\site-packages\{{ cookiecutter.package_slug }}\_options.py
 
 if %sourceDir% != %targetDir%\install (
+rem Save the installer near the app
 if exist %targetDir%\install\ rm -r %targetDir%\install
 mkdir %targetDir%\install
 %rcopy% %sourceDir% %targetDir%\install
+
+rem Create a script to refresh the app if it gets broken by Python env changes for example
+set refreshScript=%targetDir%\bin\refresh-{{ cookiecutter.project_slug }}.cmd
+echo %targetDir%/install/install_on_windows.cmd %targetParentDir% >> %refreshScript%
 )
 
 echo *************************
