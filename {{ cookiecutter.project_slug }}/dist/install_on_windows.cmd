@@ -48,7 +48,7 @@ if not exist %sourceDir%resources\ mkdir %sourceDir%resources
 rem Record details of installation method in a Python module accessible at run-time
 echo install_method, install_target = "one_dir","%targetDir%" > %targetDir%\env\Lib\site-packages\{{ cookiecutter.package_slug }}\_options.py
 
-if %sourceDir% != %targetDir%\install (
+if not %sourceDir% == %targetDir%\install (
 rem Save the installer near the app
 if exist %targetDir%\install\ rm -r %targetDir%\install
 mkdir %targetDir%\install
