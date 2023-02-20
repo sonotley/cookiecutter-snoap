@@ -1,4 +1,4 @@
-@echo off
+rem @echo off
 echo *************************
 echo Installing {{ cookiecutter.project_name }}
 echo *************************
