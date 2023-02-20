@@ -184,6 +184,5 @@ This is far more likely to happen on Windows where there is no 'system' Python. 
 
 It can also happen on Linux if you use something like `pyenv` to run multiple Python versions and you have removed the version that was used for installation.
 
-I plan to provide a script to refresh the virtual environment should this happen, and maybe find some way of warning the user at install time if
-they are using a Python that doesn't look permanent.
+The installer automatically creates a script with prefix `refresh_` in the `bin` directory which you can run to refresh the app in this instance.
 
