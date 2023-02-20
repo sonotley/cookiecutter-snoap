@@ -25,7 +25,7 @@ rem Install the pinned dependencies from requirements.txt, then install the whee
 FOR /F "delims=" %%i IN ('dir /b %sourceDir%{{ cookiecutter.package_slug }}*.whl') DO set target=%sourceDir%%%i
 FOR /F "delims=" %%i IN ('dir /b %sourceDir%requirements.txt') DO set requirements=%sourceDir%%%i || echo "WARNING: no requirements file found"
 set pinFail=0
-python -m pip install -r %requirements% || set pinFail=1
+python -m pip install -r %requirements% || set pinFail=1 & echo Dependencies could not be installed from requirements.txt, or no requirements.text was found. Attempting to resolve dependencies dynamically.
 python -m pip install %target%
 
 rem Create links to the binary for convenience, one at top level and one in a bin directory
@@ -48,6 +48,17 @@ if not exist %sourceDir%resources\ mkdir %sourceDir%resources
 rem Record details of installation method in a Python module accessible at run-time
 echo install_method, install_target = "one_dir","%targetDir%" > %targetDir%\env\Lib\site-packages\{{ cookiecutter.package_slug }}\_options.py
 
+if %sourceDir% == %targetDir%\install\ goto :complete
+rem Save the installer near the app
+if exist %targetDir%\install\ rmdir /s /q %targetDir%\install
+mkdir %targetDir%\install
+%rcopy% %sourceDir% %targetDir%\install
+
+rem Create a script to refresh the app if it gets broken by Python env changes for example
+set refreshScript=%targetDir%\bin\refresh-{{ cookiecutter.project_slug }}.cmd
+echo %targetDir%/install/install_on_windows.cmd %targetParentDir% >> %refreshScript%
+
+:complete
 echo *************************
 echo Installation complete
 if %pinFail%==1 echo WARNING: pinned versions of dependencies could not be installed. Instead dependency resolution was performed by pip, it will probably work but is not exactly as tested.

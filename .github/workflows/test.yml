@@ -46,6 +46,12 @@ jobs:
       run: cd ~/my-lovely-project/dist && ./install_on_linux.sh
     - name: Run executable
       run: cd /opt/my-lovely-project && ./my-lovely-project
+    - name: Delete the env
+      run: rm -r /opt/my-lovely-project/env
+    - name: Run refresh script
+      run:  cd /opt/my-lovely-project/bin/ && ./refresh-my-lovely-project.sh
+    - name: Run executable
+      run: cd /opt/my-lovely-project && ./my-lovely-project
 
   make-cookiecutter-and-test-installer-win:
 
@@ -80,5 +86,11 @@ jobs:
       run: rm -r \my-lovely-project
     - name: Run install script with requirements.txt
       run: "cd \\source\\my-lovely-project\\dist && install_on_windows.cmd D:"
+    - name: Run executable
+      run: cd \my-lovely-project && my-lovely-project.exe
+    - name: Delete the env
+      run: rm -r \my-lovely-project\env
+    - name: Run refresh script
+      run: \my-lovely-project\bin\refresh-my-lovely-project.cmd
     - name: Run executable
       run: cd \my-lovely-project && my-lovely-project.exe
