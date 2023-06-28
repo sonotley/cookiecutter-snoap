@@ -57,7 +57,7 @@ if not resolve_boolean("{{ cookiecutter.initialise_poetry }}"):
 subprocess.run(["poetry", "config", "--local", "virtualenvs.in-project", "true"])
 
 # initialise as a poetry project
-subprocess.run(["poetry", "init"])
+subprocess.run(["poetry", "install"])
 
 # add dev dependencies
 subprocess.run(
