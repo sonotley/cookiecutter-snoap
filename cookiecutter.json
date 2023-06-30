@@ -9,7 +9,7 @@
   "python_max_version": "3.11",
   "__min_ver": "{{ cookiecutter.python_min_version.split('.')[1] }}",
   "__max_ver": "{{ cookiecutter.python_max_version.split('.')[1] }}",
-  "__python_versions": "3.{{ range(cookiecutter.__min_ver | int, (cookiecutter.__max_ver | int) + 1) | join(', 3.') }}",
+  "__python_versions": "|\n         3.{{ range(cookiecutter.__min_ver | int, (cookiecutter.__max_ver | int) + 1) | join('\\n         3.') }}",
   "__tox_envs": "py{{ range(cookiecutter.__min_ver | int, (cookiecutter.__max_ver | int) + 1) | join(', py3') }}",
   "config_file_type": ["none", "yaml", "toml", "ini"],
   "initialise_poetry": true,

@@ -9,13 +9,13 @@
 > This installation method requires Python {{ cookiecutter.python_min_version }}+ to be installed and on the PATH. It also requires internet connectivity.
 
 Simply run the installation script for your operating system. Optionally you may supply the installation location as an argument.
-For example `install_on_windows.cmd C:\imcity`. Do not add a trailing slash.
+For example `install_on_windows.cmd C:\my_snoap_apps`. Do not add a trailing slash.
 
 If installed without specifying a location the default locations are:
 
 Windows: `C:`
 
-Debian: `/opt`
+Linux: `/opt`
 
 The installer will create a directory `{{ cookiecutter.project_slug }}` in the chosen location. This will contain 
 

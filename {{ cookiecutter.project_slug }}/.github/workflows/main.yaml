@@ -14,11 +14,10 @@ jobs:
     permissions:
       contents: write
     steps:
-    - name: setup pyenv
-      uses: "gabrielfalcao/pyenv-action@v11"
+    - name: Setup Python interpreters
+      uses: actions/setup-python@v4
       with:
-        default: {{ cookiecutter.python_max_version }}
-        versions: {{ cookiecutter.__python_versions }}
+        python-version: {{ cookiecutter.__python_versions }}
     - name: Add poetry
       uses: abatilo/actions-poetry@v2
     - uses: actions/checkout@v3
